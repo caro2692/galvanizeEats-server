@@ -1,7 +1,6 @@
 const knex = require('./knex');
-const moment = require('moment');
 
-module.export = {
+module.exports = {
   getAllBooks(){
     return knex('book');
   },
