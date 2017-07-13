@@ -21,10 +21,36 @@ module.exports = {
           })
         );
       });
-
-    //return knex('book').select('book_author.*', 'book.title', 'book.genre', 'book.description', 'book.cover_url', 'author.first_name', 'author.last_name', 'author.biography', 'author.portrait_url').innerJoin('book_author','book.id', 'book_author.book_id').innerJoin('author', 'author.id', 'book_author.author_id');
   },
   getAllAuthors(){
     return knex('author');
+  },
+  deleteBook(id){
+    return knex('book').where('id', id).delete();
+  },
+  createBook(book){
+    const new_book = {
+      title: book.title,
+      genre: book.genre,
+      cover_url: book.cover_image,
+      description: book.description
+    };
+    return knex('book').insert(new_book,'*')
+    .then(results=>{
+      const book_id = results[0].id;
+      let authors =book['authors[]'];
+      console.log(authors);
+      const book_authors = authors.map(author_id=>{
+        return {
+          book_id,
+          author_id
+        };
+      });
+      return knex('book_author')
+      .insert(book_authors)
+      .then((response)=>{
+        return results[0];
+      });
+    });
   }
 };

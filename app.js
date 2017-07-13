@@ -9,6 +9,7 @@ const cors = require('cors');
 const app = express();
 
 const books = require('./api/books.js');
+const authors = require('./api/authors.js');
 
 
 // uncomment after placing your favicon in /public
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use(cors());
 
 app.use('/api/v1/books', books);
+app.use('/api/v1/authors', authors);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -4,8 +4,8 @@ exports.up = function(knex, Promise) {
     table.increments('id').primary();
     table.integer('book_id').unsigned();
     table.integer('author_id').unsigned();
-    table.foreign('book_id').references('book.id');
-    table.foreign('author_id').references('author.id');
+    table.foreign('book_id').references('book.id').onDelete('cascade');
+    table.foreign('author_id').references('author.id').onDelete('cascade');
   });
 };
 
